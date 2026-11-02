@@ -1,0 +1,53 @@
+
+class CompteBancaire:
+    def __init__(self, solde_initial=0.0):
+        # Attribut privé : encapsulation du solde
+        self.__solde = solde_initial
+
+    def deposer(self, montant):
+        # Vérifier que le montant est positif
+        if montant > 0:
+            self.__solde += montant
+            print(f"Dépôt de {montant}€ effectué.")
+        else:
+            print("Erreur : le montant doit être positif.")
+
+    def retirer(self, montant):
+        # Vérifier que le retrait est possible
+        if 0 < montant <= self.__solde:
+            self.__solde -= montant
+            print(f"Retrait de {montant}€ effectué.")
+        else:
+            print("Erreur : montant invalide ou solde insuffisant.")
+
+    def get_solde(self):
+        # Retourner le solde du compte
+        return self.__solde
+
+
+class Client:
+    def __init__(self, nom):
+        self.nom = nom
+
+        # Composition : un client possède un compte bancaire
+        self.compte = CompteBancaire()
+
+    def afficher(self):
+        print(f"Client : {self.nom}, Solde : {self.compte.get_solde()}€")
+
+
+# Programme principal
+def main():
+    # Création d'un client
+    cli = Client("Yassir")
+
+    # Opérations bancaires
+    cli.compte.deposer(300)
+    cli.compte.retirer(50)
+
+    # Affichage des informations
+    cli.afficher()
+
+
+if __name__ == "__main__":
+    main()
